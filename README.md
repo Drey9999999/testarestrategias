@@ -29,10 +29,16 @@ tratado como 10.000 unidades da moeda de cotação (não há conversão para BRL
 ## Como rodar
 
 ```bash
-python3 run_ema9.py            # usa o cache em data/
-python3 run_ema9.py --refresh  # rebaixa o histórico da OKX
-python3 tests/test_engine.py   # testes de sanidade do motor
+python3 run_ema9.py                    # histórico completo, usa o cache em data/
+python3 run_ema9.py --desde=2025-01-01 # recorta a janela (EMA aquecida com o histórico anterior)
+python3 run_ema9.py --refresh          # rebaixa o histórico da OKX
+python3 tests/test_engine.py           # testes de sanidade do motor
 ```
+
+Com `--desde`, o histórico anterior à janela é usado apenas para aquecer a EMA, e o
+candle imediatamente anterior serve de barra zero: se o preço já estava acima da EMA
+naquele fechamento, a estratégia entra na janela já comprada, em vez de esperar um
+novo cruzamento.
 
 ## Estrutura
 
