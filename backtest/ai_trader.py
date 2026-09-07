@@ -85,10 +85,45 @@ def score_series(chart_paths, cache_csv, log_every=25):
     return done
 
 
+MIN_BASE = 20   # observacoes passadas minimas antes de a regra relativa operar
+
+
 def decisions_to_signals(n_candles, decisions):
-    """BUY -> +1, SELL -> -1, HOLD -> 0, na posicao do candle da decisao."""
+    """Regra literal: BUY -> +1, SELL -> -1, HOLD -> 0.
+
+    A palavra mais provavel vira a decisao, sem nenhum ajuste.
+    """
     sig = [0] * n_candles
     for i, row in decisions.items():
         d = row["decision"]
         sig[i] = 1 if d == "BUY" else (-1 if d == "SELL" else 0)
+    return sig
+
+
+def decisions_to_signals_relative(n_candles, decisions):
+    """Regra relativa: comprado quando a confianca de hoje supera a mediana das
+    confiancas passadas do proprio modelo.
+
+    Motivo: nas primeiras leituras o modelo respondeu BUY em 100% dos graficos.
+    O nivel absoluto da resposta carrega um vies constante e otimista que diz
+    mais sobre o modelo do que sobre o grafico; o que varia com a imagem e a
+    intensidade (p_buy - p_sell). Comparar essa intensidade com a propria
+    historia do modelo remove o vies sem olhar retorno nenhum.
+
+    A mediana e expansiva e usa apenas dias ANTERIORES ao da decisao, entao a
+    regra e causal. Nao ha parametro ajustado: o limiar e a mediana, e o
+    aquecimento e fixo em MIN_BASE observacoes, durante o qual fica fora.
+    """
+    import statistics
+
+    sig = [0] * n_candles
+    passado = []
+    for i in sorted(decisions):
+        row = decisions[i]
+        score = float(row["p_buy"]) - float(row["p_sell"])
+        if len(passado) >= MIN_BASE:
+            sig[i] = 1 if score > statistics.median(passado) else -1
+        else:
+            sig[i] = -1                      # fora do mercado durante o aquecimento
+        passado.append(score)
     return sig

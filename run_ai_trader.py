@@ -9,7 +9,8 @@ import sys
 
 from backtest.data import load
 from backtest.charts import render_series
-from backtest.ai_trader import score_series, decisions_to_signals
+from backtest.ai_trader import (score_series, decisions_to_signals,
+                                decisions_to_signals_relative)
 from backtest.engine import ema_cross_signals, run_backtest, buy_and_hold
 
 CAPITAL, FEE, SLIP = 10000.0, 0.001, 0.0005
@@ -49,6 +50,9 @@ def main():
         sig_ia = decisions_to_signals(len(candles), dec)
         ia = run_backtest(candles[w:], sig_ia[w:], CAPITAL, FEE, SLIP)
 
+        sig_rel = decisions_to_signals_relative(len(candles), dec)
+        ia_rel = run_backtest(candles[w:], sig_rel[w:], CAPITAL, FEE, SLIP)
+
         sig_ema, e = ema_cross_signals(candles, 9)
         sig_ema = list(sig_ema)
         sig_ema[w] = 1 if (e[w] is not None and candles[w].close > e[w]) else 0
@@ -59,24 +63,24 @@ def main():
         cont = {}
         for r in dec.values():
             cont[r["decision"]] = cont.get(r["decision"], 0) + 1
-        linhas.append((inst, candles[w + 1].date, candles[-1].date, ia, ema, bh, cont))
+        linhas.append((inst, candles[w + 1].date, candles[-1].date, ia, ia_rel, ema, bh, cont))
 
         with open(f"results/equity_ia_{inst}.csv", "w") as f:
             f.write("data,patrimonio\n")
             for d, eq in ia.equity:
                 f.write(f"{d},{eq:.2f}\n")
 
-    print("\n| Ativo | Período | Retorno IA (visão) | Retorno EMA 9 | Retorno buy and hold | "
-          "Máx drawdown IA | Nº de trades IA |")
-    print("|---|---|---|---|---|---|---|")
-    for inst, ini, fim, ia, ema, bh, _ in linhas:
-        print(f"| {inst} | {ini} a {fim} | {ia.total_return*100:+.1f}% | {ema.total_return*100:+.1f}% "
-              f"| {bh.total_return*100:+.1f}% | {ia.max_drawdown*100:.1f}% | {ia.n_trades} |")
+    print("\n| Ativo | Período | IA literal | IA relativa | EMA 9 | Buy and hold |")
+    print("|---|---|---|---|---|---|")
+    for inst, ini, fim, ia, ia_rel, ema, bh, _ in linhas:
+        print(f"| {inst} | {ini} a {fim} | {ia.total_return*100:+.1f}% | {ia_rel.total_return*100:+.1f}% "
+              f"| {ema.total_return*100:+.1f}% | {bh.total_return*100:+.1f}% |")
 
     print("\nDetalhe (custos ja descontados):")
-    for inst, ini, fim, ia, ema, bh, cont in linhas:
+    for inst, ini, fim, ia, ia_rel, ema, bh, cont in linhas:
         print(f"\n  {inst}  {ini} a {fim}")
-        print(metricas("IA (visao)", ia))
+        print(metricas("IA literal", ia))
+        print(metricas("IA relativa", ia_rel))
         print(metricas("EMA 9", ema))
         print(metricas("Buy and hold", bh))
         tot = sum(cont.values())
