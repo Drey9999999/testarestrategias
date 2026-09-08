@@ -142,7 +142,8 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--rule);
   <div class="verdict">
     <div class="eyebrow">O que sobreviveu</div>
     <div class="num">p = 0,000 – 0,006</div>
-    <p class="body-copy">A regra <b>“compre os 5 ativos menos voláteis do ano anterior e não mexa”</b> venceu 500 carteiras sorteadas do mesmo universo, nas quatro condições testadas. É a única coisa em todo o projeto que passou por um teste nulo rigoroso — e mesmo ela ainda perdeu 61% na janela de 2025/26. Não é descoberta: é a anomalia de baixa volatilidade, documentada em ações desde os anos 1970.</p>
+    <p class="body-copy">A regra <b>“compre os ativos menos voláteis do período anterior e não mexa”</b> venceu 500 carteiras sorteadas do mesmo universo, nas quatro condições testadas. É a única coisa em todo o projeto que passou por um teste nulo rigoroso — e mesmo ela ainda perdeu 61% na janela de 2025/26. Não é descoberta: é a anomalia de baixa volatilidade, documentada em ações desde os anos 1970.</p>
+    <p class="body-copy" style="font-size:14.5px;color:var(--muted)">Testada depois em 24 combinações de janela de medição e tamanho de carteira, foi significativa em 14 — muito acima do 1,2 esperado por acaso, mas longe de universal. <b>Vale para carteiras concentradas</b> (3 a 10 de 53 ativos) <b>com medição de 180 dias ou mais</b>; deixa de valer quando diluída em 20 ativos, e a janela de 60 dias falha em um dos dois períodos.</p>
   </div>
 </section>
 
@@ -291,6 +292,27 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--rule);
     <p>A OKX só lista pares vivos hoje. Dos 65 candidatos, 11 foram descartados por histórico curto — EOS, FTM, MKR, DASH, ZEC, WAVES, OMG, RUNE, KAVA, ANKR, REN. Ativos de baixa volatilidade são justamente os mais propensos a sobreviver, então parte do efeito medido — possivelmente boa parte — pode ser apenas isso. Não há como corrigir com esta fonte.</p>
     <p>A regra que sobreviveu ainda perdeu 61% na janela de teste. “Menos ruim que o sorteio” não é lucro. E o efeito é conhecido há cinquenta anos: o projeto reencontrou algo documentado, não achou algo novo.</p>
   </div>
+</section>
+
+<section>
+  <div>
+    <div class="eyebrow">Custo de execução</div>
+    <h2>Duas causas diferentes, que pareciam a mesma</h2>
+  </div>
+  <p class="body-copy">Baixar o custo separa “a estratégia não tem vantagem” de “a vantagem existe e é menor que o pedágio”. Aplicado a 2025/26:</p>
+  <div class="tw">
+    <table>
+      <caption>BTC-USDT · retorno em 2025/26 por nível de custo</caption>
+      <thead><tr><th>Custo por operação</th><th>EMA 9</th><th>Cérebro plástico</th><th>Comprar e segurar</th></tr></thead>
+      <tbody>
+        <tr><td>0,15% (corretora cara)</td><td class="n bad">−15,6%</td><td class="n bad">−54,7%</td><td class="n">−14,4%</td></tr>
+        <tr><td>0,06% (intermediária)</td><td class="n bad">−6,2%</td><td class="n bad">−42,1%</td><td class="n">−14,3%</td></tr>
+        <tr><td>0,02% (maker barato)</td><td class="n">−1,7%</td><td class="n bad">−35,5%</td><td class="n">−14,2%</td></tr>
+        <tr><td>Zero (limite teórico)</td><td class="n good">+0,7%</td><td class="n bad">−31,9%</td><td class="n">−14,2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="body-copy">A EMA 9 sai de −15,6% para +0,7% quando o custo desaparece: o problema dela <b>era</b> o pedágio, e ela carrega uma vantagem defensiva real, ainda que minúscula. O cérebro plástico perde 31,9% <b>mesmo sem pagar nada</b> — ali o custo nunca foi o problema. Corrige uma leitura anterior deste projeto, que atribuía o prejuízo da rede ao giro.</p>
 </section>
 
 <section>

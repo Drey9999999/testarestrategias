@@ -136,10 +136,46 @@ protege mas nao preve), cinco nao sobreviveram.
 
 ## Fila seguinte (proximos ciclos)
 
-- [ ] 13. Sensibilidade da regra de volatilidade ao numero de ativos e a
-      janela de medicao (60/180/365 dias) — se so funciona com 365 dias e
-      5 ativos, e fragil
+- [x] 13. Fragilidade: significativa em 14 de 24 combinacoes. Vale para
+      carteiras de 3 a 10 ativos com medicao de 180+ dias; falha em 20
 - [ ] 14. Tentar medir o vies de sobrevivencia: comparar o universo de hoje
       com a lista de pares que a OKX listava em 2021, se houver como obter
-- [ ] 15. Custo de execucao de 0,02% (maker) aplicado a TUDO que foi testado,
-      para separar "nao tem vantagem" de "vantagem menor que o pedagio"
+- [x] 15. Custo: separa as duas causas. A EMA 9 era pedagio; a rede nao.
+
+### Ciclo 5 — a regra sobrevive qualificada, e o custo separa duas causas
+
+Item 13 (fragilidade). A regra foi significativa a 5% em 14 de 24 combinacoes
+de janela de medicao x tamanho de carteira — muito acima do 1,2 esperado por
+acaso, mas longe de universal. O padrao e informativo:
+
+  - falha SEMPRE com 20 ativos (p entre 0,065 e 0,320): diluir 20 de 53 nao
+    deixa selecao nenhuma
+  - a janela de 60 dias falha na validacao inteira (p 0,085 a 0,470) e passa
+    no teste — depende do periodo
+  - com 3 a 10 ativos e janela de 180 ou 365 dias, passa em 9 de 12 celulas
+
+Conclusao: o efeito e real mas exige carteira concentrada e medicao longa. O
+relatorio publicado foi corrigido para dizer isso; a afirmacao anterior ("nas
+quatro condicoes") era verdadeira mas estreita demais para o que sugeria.
+
+Item 15 (custo). Baixar o custo separa duas causas que pareciam a mesma:
+
+| custo/op | EMA 9 (BTC) | cerebro plastico | comprar e segurar |
+|---|---|---|---|
+| 0,15% | -15,6% | -54,7% | -14,4% |
+| 0,02% |  -1,7% | -35,5% | -14,2% |
+| zero  |  +0,7% | -31,9% | -14,2% |
+
+A EMA 9 vira positiva sem custo: o problema dela ERA o pedagio, e ela carrega
+uma vantagem defensiva real, ainda que minuscula. A rede perde 31,9% mesmo sem
+pagar nada — ali nunca foi custo, e sim ausencia de vantagem. Isso CORRIGE uma
+leitura anterior deste projeto, que atribuia o prejuizo da rede ao giro.
+
+## Fila seguinte
+
+- [ ] 16. A EMA 9 a custo zero bate comprar e segurar por ser defensiva.
+      Medir quanto tempo ela fica fora do mercado e se o ganho vem so disso
+- [ ] 14. Vies de sobrevivencia: obter lista historica de pares da OKX
+- [ ] 17. Combinar o que sobreviveu: carteira de baixa volatilidade filtrada
+      pela EMA 9 a custo de maker. E a unica combinacao com duas pecas que
+      passaram em algum teste
