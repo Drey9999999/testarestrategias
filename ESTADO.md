@@ -173,9 +173,41 @@ leitura anterior deste projeto, que atribuia o prejuizo da rede ao giro.
 
 ## Fila seguinte
 
-- [ ] 16. A EMA 9 a custo zero bate comprar e segurar por ser defensiva.
-      Medir quanto tempo ela fica fora do mercado e se o ganho vem so disso
+- [x] 16. O ganho da EMA a custo zero e exposicao reduzida, nao momento
+      (p = 0,342 e 0,538 contra aleatorios de mesma exposicao)
 - [ ] 14. Vies de sobrevivencia: obter lista historica de pares da OKX
-- [ ] 17. Combinar o que sobreviveu: carteira de baixa volatilidade filtrada
-      pela EMA 9 a custo de maker. E a unica combinacao com duas pecas que
-      passaram em algum teste
+- [x] 17. A combinacao nao agrega: filtro de EMA e indistinguivel de filtro
+      aleatorio de mesma densidade (p = 0,335 e 0,480)
+
+### Ciclo 6 — a EMA nao e um segundo achado, e a fila util esta perto do fim
+
+Item 16. A EMA 9 a custo zero rende +0,7% no BTC contra -14,2% de comprar e
+segurar, e passa 50,2% do tempo comprada. Contra 500 estrategias aleatorias
+com a MESMA exposicao e o MESMO numero de trocas (117):
+
+  BTC: EMA +0,7%  | mediana aleatoria -11,7% | 171/500 igualam -> p = 0,342
+  ETH: EMA -19,7% | mediana aleatoria -15,8% | 269/500 igualam -> p = 0,538
+
+Nao ha escolha de momento. O que a EMA faz e reduzir exposicao, e reduzir
+exposicao ja e vantagem num mercado de queda. Nao e um achado independente da
+regra de volatilidade: e o mesmo efeito defensivo visto de outro angulo.
+Linha da EMA corrigida no relatorio publicado.
+
+Item 17. Carteira de menor volatilidade filtrada pela EMA 9, custo de maker:
+
+  validacao: sem filtro R$ 67.659 | com filtro R$ 65.586 (PIOR) | p = 0,335
+  teste:     sem filtro R$  3.889 | com filtro R$  4.098        | p = 0,480
+
+Filtros aleatorios de mesma densidade rendem o mesmo. Combinar as duas pecas
+nao produz nada — coerente com o item 16.
+
+## Situacao da fila
+
+As avenidas produtivas estao praticamente esgotadas. Sobrou o item 14 (vies de
+sobrevivencia), que depende de uma fonte de dados historicos de listagem que
+talvez nao exista publicamente. Fora isso, o que resta sao variacoes de coisas
+ja refutadas, e continuar gerando variacoes de hipoteses mortas seria produzir
+volume, nao conhecimento.
+
+- [ ] 14. Vies de sobrevivencia: procurar fonte de listagens historicas
+- [ ] 18. Se o item 14 nao tiver fonte, encerrar os ciclos e consolidar
