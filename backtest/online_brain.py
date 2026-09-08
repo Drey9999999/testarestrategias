@@ -70,7 +70,7 @@ def conjunto_features(conjunto):
 
 def rodar(candles, ema_vals, inicio, congelar_em=None, usar_memoria=True,
           lr=0.01, oculto=16, passos_por_dia=2, lote=32, semente=0, limiar=0.5,
-          conjunto="basico"):
+          conjunto="basico", banda=0.0):
     """Percorre a serie decidindo e (enquanto nao congelado) treinando.
 
     `congelar_em` e uma data: a partir dela os pesos param de mudar, mas a
@@ -138,7 +138,14 @@ def rodar(candles, ema_vals, inicio, congelar_em=None, usar_memoria=True,
         # 3) decide
         with torch.no_grad():
             p = torch.sigmoid(modelo(torch.tensor([norm.aplicar(x)], dtype=torch.float32)))[0].item()
-        pos[t] = 1 if p > limiar else 0
+        # banda de histerese: so troca de posicao com conviccao, o que corta o
+        # giro. Estando fora exige p > limiar+banda; estando dentro so sai com
+        # p < limiar-banda.
+        anterior_pos = pos.get(t - 1, 0)
+        if anterior_pos == 0:
+            pos[t] = 1 if p > limiar + banda else 0
+        else:
+            pos[t] = 0 if p < limiar - banda else 1
         mem.posicionado = pos[t]
         sinais[t] = 1 if pos[t] == 1 else -1
 
