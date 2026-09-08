@@ -18,7 +18,7 @@ despertar, executar o proximo item, commitar, e reagendar.
        configuracoes; o ganho absoluto some (ambos passam a perder feio)
 - [x] 12. Rebalanceamento 10/20/40/60: NAO ha tendencia. Minha previsao de
        que adaptar menos melhoraria progressivamente estava ERRADA
-- [ ] 10. Relatorio consolidado
+- [x] 10. Relatorio consolidado publicado (relatorio.html)
 
 ## Vies conhecido a declarar no relatorio
 
@@ -124,3 +124,22 @@ TRES RESSALVAS QUE PRECISAM ANDAR JUNTO DESSE NUMERO:
 3. Nao e descoberta. E a anomalia de baixa volatilidade, documentada em acoes
    desde os anos 1970. O projeto reencontrou algo conhecido, nao achou algo
    novo.
+
+### Ciclo 4 (parte 2) — relatorio consolidado
+
+Publicado em https://claude.ai/code/artifact/be247b3d-f718-45f3-bec2-a815c8187537
+e versionado como relatorio.html.
+
+Placar final de sete abordagens: uma sobreviveu a teste nulo (menor
+volatilidade, p entre 0,000 e 0,006), uma ficou parcial (o metodo do livro
+protege mas nao preve), cinco nao sobreviveram.
+
+## Fila seguinte (proximos ciclos)
+
+- [ ] 13. Sensibilidade da regra de volatilidade ao numero de ativos e a
+      janela de medicao (60/180/365 dias) — se so funciona com 365 dias e
+      5 ativos, e fragil
+- [ ] 14. Tentar medir o vies de sobrevivencia: comparar o universo de hoje
+      com a lista de pares que a OKX listava em 2021, se houver como obter
+- [ ] 15. Custo de execucao de 0,02% (maker) aplicado a TUDO que foi testado,
+      para separar "nao tem vantagem" de "vantagem menor que o pedagio"

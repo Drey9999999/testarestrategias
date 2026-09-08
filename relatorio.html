@@ -1,0 +1,309 @@
+<title>Caderno de Refutações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --ground:#F7F8FA; --surface:#FFFFFF; --surface-2:#EFF2F6;
+  --ink:#14181F; --ink-soft:#3D4653; --muted:#69737F;
+  --rule:#DCE2E9; --rule-strong:#C3CCD6;
+  --live:#0F7A6C; --live-bg:#E4F1EE;
+  --dead:#A83E32; --dead-bg:#F7E8E6;
+  --warn:#8A6A16; --warn-bg:#F6EEDB;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1319; --surface:#161B23; --surface-2:#1D242E;
+    --ink:#E6EAF0; --ink-soft:#B6C0CC; --muted:#8794A3;
+    --rule:#28313D; --rule-strong:#3A4653;
+    --live:#4FC7B2; --live-bg:#12302C;
+    --dead:#E8837A; --dead-bg:#33201E;
+    --warn:#D9B45C; --warn-bg:#2E2716;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1319; --surface:#161B23; --surface-2:#1D242E;
+  --ink:#E6EAF0; --ink-soft:#B6C0CC; --muted:#8794A3;
+  --rule:#28313D; --rule-strong:#3A4653;
+  --live:#4FC7B2; --live-bg:#12302C;
+  --dead:#E8837A; --dead-bg:#33201E;
+  --warn:#D9B45C; --warn-bg:#2E2716;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:56px 24px 96px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5.4vw,52px);
+  line-height:1.1;letter-spacing:-.015em}
+h2{font-family:var(--serif);font-weight:600;font-size:27px;line-height:1.25;margin-bottom:6px}
+h3{font-family:var(--sans);font-weight:600;font-size:17px;line-height:1.35}
+p{margin:0}
+a{color:var(--live)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);font-weight:500}
+.lede{font-family:var(--serif);font-size:20px;line-height:1.55;color:var(--ink-soft);
+  max-width:62ch}
+header{display:flex;flex-direction:column;gap:18px;padding-bottom:30px;
+  border-bottom:2px solid var(--rule-strong)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--mono);
+  font-size:12px;color:var(--muted)}
+section{padding-top:44px;display:flex;flex-direction:column;gap:20px}
+.body-copy{display:flex;flex-direction:column;gap:14px;max-width:66ch}
+
+/* veredito */
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);
+  font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 9px;border-radius:3px;white-space:nowrap}
+.chip.live{background:var(--live-bg);color:var(--live)}
+.chip.dead{background:var(--dead-bg);color:var(--dead)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}
+
+/* verdict banner */
+.verdict{background:var(--surface);border:1px solid var(--rule);
+  border-left:4px solid var(--live);padding:24px 26px;
+  display:flex;flex-direction:column;gap:12px}
+.verdict .num{font-family:var(--mono);font-size:30px;font-weight:600;color:var(--live);
+  font-variant-numeric:tabular-nums}
+
+/* ledger */
+.ledger{display:flex;flex-direction:column;border-top:1px solid var(--rule-strong)}
+.row{display:grid;grid-template-columns:1fr 168px;gap:14px 22px;
+  padding:20px 0;border-bottom:1px solid var(--rule);align-items:start}
+.row .what{display:flex;flex-direction:column;gap:7px}
+.row .claim{font-family:var(--mono);font-size:12.5px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.row .test{font-size:14.5px;color:var(--ink-soft)}
+.row .verd{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.pval{font-family:var(--mono);font-size:12.5px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+
+/* tables */
+.tw{overflow-x:auto;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:14px}
+caption{text-align:left;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:12px 16px 0}
+th,td{padding:9px 16px;text-align:right;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);font-weight:500;
+  border-bottom:1px solid var(--rule-strong)}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td.good{color:var(--live);font-weight:500}
+td.bad{color:var(--dead)}
+
+/* traps */
+.traps{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule-strong)}
+.trap{padding:20px 0;border-bottom:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:8px}
+.trap .head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.trap .mirage{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--dead);
+  font-variant-numeric:tabular-nums}
+.trap .real{font-size:14.5px;color:var(--ink-soft);max-width:64ch}
+.trap .catch{font-size:13.5px;color:var(--muted);max-width:64ch}
+.trap .catch b{color:var(--ink-soft);font-weight:600}
+
+/* bugs */
+ul.bugs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+ul.bugs li{display:grid;grid-template-columns:22px 1fr;gap:12px;
+  font-size:14.5px;color:var(--ink-soft);max-width:66ch}
+ul.bugs li span{font-family:var(--mono);font-size:12px;color:var(--dead);padding-top:3px}
+
+.caveat{background:var(--surface-2);border:1px solid var(--rule);padding:20px 22px;
+  display:flex;flex-direction:column;gap:11px}
+.caveat h3{color:var(--warn)}
+.caveat p{font-size:14.5px;color:var(--ink-soft);max-width:64ch}
+
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+  display:flex;flex-direction:column;gap:6px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Backtest · BTC e ETH · dados diários reais OKX · 2018–2026</div>
+  <h1>Caderno de Refutações</h1>
+  <p class="lede">Sete abordagens testadas, de uma média móvel a uma rede neural lendo fotos de gráfico. Uma sobreviveu ao teste nulo. Este é o registro do que matou as outras seis — e das três vezes em que quase reportei um número falso.</p>
+  <div class="meta">
+    <span>3.161 candles diários por ativo</span>
+    <span>111.691 amostras de treino</span>
+    <span>54 mercados</span>
+    <span>R$ 10.000 iniciais · taxa 0,1% · slippage 0,05%</span>
+  </div>
+</header>
+
+<section>
+  <div class="verdict">
+    <div class="eyebrow">O que sobreviveu</div>
+    <div class="num">p = 0,000 – 0,006</div>
+    <p class="body-copy">A regra <b>“compre os 5 ativos menos voláteis do ano anterior e não mexa”</b> venceu 500 carteiras sorteadas do mesmo universo, nas quatro condições testadas. É a única coisa em todo o projeto que passou por um teste nulo rigoroso — e mesmo ela ainda perdeu 61% na janela de 2025/26. Não é descoberta: é a anomalia de baixa volatilidade, documentada em ações desde os anos 1970.</p>
+  </div>
+</section>
+
+<section>
+  <div>
+    <div class="eyebrow">Livro-razão</div>
+    <h2>Tudo que foi testado, e o que matou cada um</h2>
+  </div>
+  <div class="ledger">
+
+    <div class="row">
+      <div class="what">
+        <h3>EMA 9 no diário</h3>
+        <p class="claim">BTC +287,6% · ETH +289,8% · histórico completo</p>
+        <p class="test">Em 2025/26 perde para comprar e segurar nos dois ativos (−15,6% e −33,7%). Com ~300 operações, 0,3% de atrito por ciclo consome dois terços do ganho bruto.</p>
+      </div>
+      <div class="verd"><span class="chip dead">Não sobreviveu</span><span class="pval">custo &gt; vantagem</span></div>
+    </div>
+
+    <div class="row">
+      <div class="what">
+        <h3>IA de visão lendo a foto do gráfico</h3>
+        <p class="claim">Qwen2-VL-2B local · 1.230 imagens · ETH +106,9%</p>
+        <p class="test">O deslocamento circular do sinal produziu resultado igual ou melhor em 40 de 595 tentativas — uma delas rendeu +473%. O ganho cabe dentro do que o acaso produz.</p>
+      </div>
+      <div class="verd"><span class="chip dead">Não sobreviveu</span><span class="pval">p = 0,067 e 0,096</span></div>
+    </div>
+
+    <div class="row">
+      <div class="what">
+        <h3>Cérebro plástico com memória</h3>
+        <p class="claim">Pesos sempre treinando · 3.800 épocas · 46 indicadores do livro</p>
+        <p class="test">Acerto <i>dentro</i> da amostra sobe de 53% para 94,5%; acerto <i>prevendo</i> fica em 49%, abaixo da taxa base de 54,4%. Memorização sem generalização.</p>
+      </div>
+      <div class="verd"><span class="chip dead">Não sobreviveu</span><span class="pval">pior que dizer “sobe”</span></div>
+    </div>
+
+    <div class="row">
+      <div class="what">
+        <h3>Stop, alvo 1:2 e risco de 3% — o método do livro</h3>
+        <p class="claim">Expectativa +0,54R no BTC · acerto 46–54% · drawdown −13% contra −76,6%</p>
+        <p class="test">O mecanismo funciona: gerencia risco como promete. Mas entradas <i>sorteadas</i> sob as mesmas regras igualaram ou superaram o modelo em 12 a 20 de 20 comparações. A expectativa vem da deriva do mercado, não da escolha de momento.</p>
+      </div>
+      <div class="verd"><span class="chip warn">Parcial</span><span class="pval">protege, não prevê</span></div>
+    </div>
+
+    <div class="row">
+      <div class="what">
+        <h3>Carteira transversal em 54 ativos</h3>
+        <p class="claim">Modelo R$ 3.812 · sorteio R$ 1.450 · nenhum de 20 sorteios igualou</p>
+        <p class="test">Bate a escolha aleatória de ativos com folga. Mas não bate as próprias escolhas aplicadas em datas deslocadas: p = 0,036 / 0,145 / 0,655. Aprendeu preferência por ativo, não momento.</p>
+      </div>
+      <div class="verd"><span class="chip dead">Não sobreviveu</span><span class="pval">p até 0,655</span></div>
+    </div>
+
+    <div class="row">
+      <div class="what">
+        <h3>Adaptação constante</h3>
+        <p class="claim">Reescolher a cada 10 dias contra congelar a escolha</p>
+        <p class="test">Congelar vence nas duas janelas e em 7 de 8 tamanhos de carteira. Variar o ritmo (10/20/40/60 dias) não produz tendência alguma — a desvantagem não vem da frequência, vem da seleção.</p>
+      </div>
+      <div class="verd"><span class="chip dead">Refutado</span><span class="pval">estático &gt; adaptativo</span></div>
+    </div>
+
+    <div class="row">
+      <div class="what">
+        <h3>Menor volatilidade passada</h3>
+        <p class="claim">Regra de uma linha, sem modelo, sem treino</p>
+        <p class="test">Vence 500 carteiras sorteadas nas quatro condições, e continua vencendo quando a volatilidade é medida um ano antes da data prevista — é propriedade persistente do ativo, não artefato de medição.</p>
+      </div>
+      <div class="verd"><span class="chip live">Sobreviveu</span><span class="pval">p = 0,000 – 0,006</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div>
+    <div class="eyebrow">Curva de aprendizado</div>
+    <h2>Treinar mais memoriza, não prevê</h2>
+  </div>
+  <p class="body-copy">A hipótese em teste era “se deixarmos a IA treinar, ela chega em algum lugar”. Variando o treino de zero a 3.800 épocas completas sobre todos os anos de gráfico do BTC, com horizonte de 20 dias:</p>
+  <div class="tw">
+    <table>
+      <caption>BTC-USDT · mediana de 3 sementes · acerto de 50% = moeda</caption>
+      <thead><tr><th>Treino</th><th>Épocas</th><th>Acerto dentro da amostra</th><th>Acerto prevendo</th></tr></thead>
+      <tbody>
+        <tr><td>Nenhum (rede aleatória)</td><td class="n">0</td><td class="n">53,2%</td><td class="n">52,3%</td></tr>
+        <tr><td>Mínimo</td><td class="n">0</td><td class="n">80,9%</td><td class="n">48,3%</td></tr>
+        <tr><td>Leve</td><td class="n">64</td><td class="n">86,7%</td><td class="n">49,0%</td></tr>
+        <tr><td>Padrão</td><td class="n">376</td><td class="n">90,5%</td><td class="n">49,1%</td></tr>
+        <tr><td>Pesado</td><td class="n">940</td><td class="n">93,2%</td><td class="n">49,9%</td></tr>
+        <tr><td>Exaustivo</td><td class="n">3.800</td><td class="n good">94,5%</td><td class="n bad">49,6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="body-copy">A memorização vai de 53% a 94,5%. A previsão não sai de 49% — e a taxa base de períodos de 20 dias que sobem é 54,4%, ou seja, todas as versões treinadas ficaram <b>piores que dizer “sobe” sempre</b>. A rede não treinada foi a que melhor previu.</p>
+</section>
+
+<section>
+  <div>
+    <div class="eyebrow">Miragens</div>
+    <h2>Três vezes em que quase reportei um número falso</h2>
+  </div>
+  <div class="traps">
+    <div class="trap">
+      <div class="head"><span class="mirage">+463,8%</span><span class="chip dead">Degeneração</span></div>
+      <p class="real">Permanência mínima de 40 dias na validação do BTC, com 17 operações e 12,2% líquidos por operação. Idêntico ao comprar e segurar do mesmo período (+463,9%).</p>
+      <p class="catch"><b>O que pegou:</b> medir a fração do tempo comprado — 92 a 95%. O modelo não ficou bom, ficou impedido de agir, e a alta fez o resto. No teste seguinte, em mercado de queda, entregou −16,9%.</p>
+    </div>
+    <div class="trap">
+      <div class="head"><span class="mirage">+20,9%</span><span class="chip dead">Um ativo só</span></div>
+      <p class="real">Carteira de 3 ativos rendendo em plena queda de 2025/26, quando o universo caiu 75%.</p>
+      <p class="catch"><b>O que pegou:</b> abrir a carteira ativo por ativo. Vinha quase toda do OKB (+135,6%) — que por acaso é o token da própria corretora de onde vêm todos os dados do projeto. BTC e ETH, os outros dois, caíram 14,2% e 24,7%.</p>
+    </div>
+    <div class="trap">
+      <div class="head"><span class="mirage">p = 0,001</span><span class="chip dead">Teste permissivo</span></div>
+      <p class="real">O teste nulo por embaralhamento dava significância esmagadora para a IA de visão. Renderia um anúncio de descoberta.</p>
+      <p class="catch"><b>O que pegou:</b> embaralhar destrói a autocorrelação do sinal, então as versões nulas operam muito mais e sangram em taxa — o teste media “meu sinal é suave”, não “meu sinal acerta”. O deslocamento circular, que preserva giro e suavidade, devolveu p = 0,067.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div>
+    <div class="eyebrow">Autocorreção</div>
+    <h2>Bugs que encontrei no meu próprio código</h2>
+  </div>
+  <p class="body-copy">Todos inflariam o resultado. Nenhum foi reportado por ninguém — apareceram porque cada número passou por verificação independente antes de virar afirmação.</p>
+  <ul class="bugs">
+    <li><span>01</span><div>A carteira transversal executava na abertura do <b>mesmo</b> dia cujo fechamento gerava o sinal: um dia inteiro de vantagem indevida.</div></li>
+    <li><span>02</span><div>O motor com stop não verificava o stop no próprio candle da entrada, inventando sobrevivência que o dado não dá.</div></li>
+    <li><span>03</span><div>O patrimônio de referência estava errado na liquidação final, distorcendo o lucro do último trade.</div></li>
+    <li><span>04</span><div>O degrau “sem treino” da curva de aprendizado treinava 2.846 épocas escondido — o controle não era controle.</div></li>
+    <li><span>05</span><div>O buffer de treino era remontado a cada dia, um custo O(n²) que tornava o experimento inviável antes de ser corrigido.</div></li>
+  </ul>
+</section>
+
+<section>
+  <div>
+    <div class="eyebrow">Ressalvas</div>
+    <h2>O que enfraquece até o resultado que sobreviveu</h2>
+  </div>
+  <div class="caveat">
+    <h3>Viés de sobrevivência, e aqui ele morde forte</h3>
+    <p>A OKX só lista pares vivos hoje. Dos 65 candidatos, 11 foram descartados por histórico curto — EOS, FTM, MKR, DASH, ZEC, WAVES, OMG, RUNE, KAVA, ANKR, REN. Ativos de baixa volatilidade são justamente os mais propensos a sobreviver, então parte do efeito medido — possivelmente boa parte — pode ser apenas isso. Não há como corrigir com esta fonte.</p>
+    <p>A regra que sobreviveu ainda perdeu 61% na janela de teste. “Menos ruim que o sorteio” não é lucro. E o efeito é conhecido há cinquenta anos: o projeto reencontrou algo documentado, não achou algo novo.</p>
+  </div>
+</section>
+
+<section>
+  <div>
+    <div class="eyebrow">Diagnóstico</div>
+    <h2>Onde o dinheiro se perde, em um número</h2>
+  </div>
+  <p class="body-copy">Medida em 2025/26 sobre 108 e 140 operações: a vantagem bruta é de aproximadamente <b>0,1% por operação</b>, contra um custo de <b>0,3% por operação</b>. O modelo precisaria de três vezes mais vantagem do que consegue extrair.</p>
+  <p class="body-copy">Isso não é falha de inteligência do modelo, e não se conserta com mais épocas — a curva de aprendizado já mostrou que treinar mais afasta em vez de aproximar. É a estrutura do jogo em barra diária com esse custo. As três saídas que os números apontam, em ordem de força: custo de execução dez vezes menor, um alvo com sinal mais forte que a direção diária, e vantagem minúscula repetida em centenas de ativos em vez de dois.</p>
+</section>
+
+<footer>
+  <div>Todos os preços são reais (OKX spot, candles diários fechados). Nenhum dado sintético.</div>
+  <div>Causalidade provada por destruição do futuro em cada motor: embaralhados os candles a partir de uma data, nenhuma decisão anterior muda.</div>
+</footer>
+</div>
