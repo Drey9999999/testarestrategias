@@ -56,8 +56,14 @@ class VisionTrader:
         return WORDS[int(max(range(3), key=lambda k: p[k]))], p[0], p[1], p[2]
 
 
-def score_series(chart_paths, cache_csv, log_every=25):
-    """Roda o modelo em cada imagem, com cache em CSV para ser retomavel."""
+def score_series(chart_paths, cache_csv, log_every=25, max_new=None):
+    """Roda o modelo em cada imagem, com cache em CSV para ser retomavel.
+
+    `max_new` limita quantas imagens novas sao processadas nesta chamada. A
+    maquina deste ambiente e suspensa quando a sessao fica ociosa, entao um job
+    longo em background congela no meio; processar em lotes curtos em primeiro
+    plano e o que de fato avanca.
+    """
     done = {}
     if os.path.exists(cache_csv):
         with open(cache_csv) as f:
@@ -65,6 +71,8 @@ def score_series(chart_paths, cache_csv, log_every=25):
                 done[int(row["i"])] = row
 
     faltam = [i for i in sorted(chart_paths) if i not in done]
+    if max_new is not None:
+        faltam = faltam[:max_new]
     if faltam:
         trader = VisionTrader()
         novo = not os.path.exists(cache_csv)

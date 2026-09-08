@@ -30,8 +30,17 @@ def metricas(nome, r):
             f"medio {money(r.avg_trade_pnl)} ({r.avg_trade_ret*100:+.2f}%)")
 
 
+def _lote():
+    for a in sys.argv[1:]:
+        if a.startswith("--lote="):
+            return int(a.split("=")[1])
+    return None
+
+
 def main():
     only = [a for a in sys.argv[1:] if a in ASSETS] or ASSETS
+    lote = _lote()
+    faltando = False
     linhas = []
     for inst in only:
         candles = load(inst)
@@ -45,7 +54,12 @@ def main():
 
         print(f"[{inst}] rodando o modelo de visao em {len(charts)} imagens", flush=True)
         os.makedirs("results", exist_ok=True)
-        dec = score_series(charts, f"results/ai_scores_{inst}.csv")
+        dec = score_series(charts, f"results/ai_scores_{inst}.csv", max_new=lote)
+        if len(dec) < len(charts):
+            print(f"[{inst}] {len(dec)}/{len(charts)} leituras — faltam "
+                  f"{len(charts)-len(dec)}; rode de novo para continuar", flush=True)
+            faltando = True
+            continue
 
         sig_ia = decisions_to_signals(len(candles), dec)
         ia = run_backtest(candles[w:], sig_ia[w:], CAPITAL, FEE, SLIP)
@@ -70,6 +84,8 @@ def main():
             for d, eq in ia.equity:
                 f.write(f"{d},{eq:.2f}\n")
 
+    if faltando or not linhas:
+        return
     print("\n| Ativo | Período | IA literal | IA relativa | EMA 9 | Buy and hold |")
     print("|---|---|---|---|---|---|")
     for inst, ini, fim, ia, ia_rel, ema, bh, _ in linhas:
