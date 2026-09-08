@@ -10,7 +10,7 @@ despertar, executar o proximo item, commitar, e reagendar.
 - [x] 3. Carteira transversal: top 5, rebalanceamento a cada 10 dias
 - [x] 4. Sensibilidade a custo: 0,15% / 0,05% / 0,02%
 - [x] 5. Teste nulo por deslocamento: p = 0,036 / 0,145 / 0,655 (inconsistente)
-- [ ] 6. Mais sementes no teste nulo (3 e pouco para concluir)
+- [x] 6. Teste nulo da regra de volatilidade: p entre 0,000 e 0,006
 - [x] 7. Controle da preferencia estatica: o FIXO VENCE o adaptativo
 - [x] 8. Repetido na validacao 2023-24: mesmo resultado
 - [x] 9. Sensibilidade ao top_n: estatico vence em 7 de 8 configuracoes
@@ -96,3 +96,31 @@ O que a volatilidade passada captura e um efeito defensivo conhecido: ativos
 menos volateis caem menos nas quedas. Que ele tambem tenha vencido no bull
 market de 2023-24 (R$ 67.638 contra R$ 26.242) e mais surpreendente e merece
 o teste nulo do item 6.
+
+### Ciclo 4 — a unica coisa que passou em teste nulo
+
+A regra "compre os 5 menos volateis do ano anterior e nao mexa" contra 500
+carteiras de 5 ativos sorteadas do mesmo universo, mesma mecanica e custo:
+
+| universo | janela | regra | mediana dos sorteios | p |
+|---|---|---|---|---|
+| 54 ativos | validacao 23-24 | R$ 53.163 | R$ 23.873 | 0,006 |
+| 54 ativos | teste 2025/26   | R$  7.664 | R$  1.801 | 0,002 |
+| sem OKB   | validacao 23-24 | R$ 67.638 | R$ 23.270 | 0,000 |
+| sem OKB   | teste 2025/26   | R$  3.888 | R$  1.776 | 0,004 |
+
+Significativo nas quatro condicoes. E medir a volatilidade um ano antes da
+data prevista tambem funciona (R$ 35.817 e R$ 9.164), o que reforca: e uma
+propriedade persistente do ativo, nao um artefato de quando se mede.
+
+TRES RESSALVAS QUE PRECISAM ANDAR JUNTO DESSE NUMERO:
+
+1. VIES DE SOBREVIVENCIA, e aqui ele morde com forca. A OKX so lista pares
+   vivos hoje, e 11 dos 65 candidatos foram descartados por historico curto.
+   Ativos de baixa volatilidade sao justamente os mais propensos a sobreviver.
+   Parte do efeito — talvez boa parte — pode ser so isso. Nao ha como medir
+   com esta fonte.
+2. Continua perdendo dinheiro: R$ 3.888 em 2025/26 e -61%.
+3. Nao e descoberta. E a anomalia de baixa volatilidade, documentada em acoes
+   desde os anos 1970. O projeto reencontrou algo conhecido, nao achou algo
+   novo.
