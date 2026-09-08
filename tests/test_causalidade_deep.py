@@ -12,7 +12,7 @@ H = 10
 
 c = load("BTC-USDT")
 corte = next(i for i, x in enumerate(c) if x.date >= CORTE)
-s1, d1 = rodar(c, WARMUP, horizonte=H, semente=0)
+s1, i1 = rodar(c, WARMUP, horizonte=H, semente=0); d1 = i1["diario"]
 
 random.seed(7)
 c2 = copy.deepcopy(c)
@@ -20,7 +20,7 @@ for i in range(corte, len(c2)):
     f = random.uniform(0.5, 2.0)
     c2[i].open *= f; c2[i].high *= f; c2[i].low *= f; c2[i].close *= f
     c2[i].volume *= random.uniform(0.3, 3.0)
-s2, d2 = rodar(c2, WARMUP, horizonte=H, semente=0)
+s2, i2 = rodar(c2, WARMUP, horizonte=H, semente=0); d2 = i2["diario"]
 
 antes = [(a, b) for a, b in zip(d1, d2) if a["data"] < CORTE]
 difs = [a["data"] for a, b in antes if a["posicao"] != b["posicao"] or abs(a["p"] - b["p"]) > 1e-12]

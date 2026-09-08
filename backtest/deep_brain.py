@@ -122,7 +122,6 @@ def rodar(candles, inicio, horizonte=10, congelar_em=None, usar_memoria=True,
             BY[nb] = 1.0 if r_k > 0 else 0.0
             nb += 1
             if not congelado:
-                treinar(1) if passos_por_dia == 0 else None
                 if passos_por_dia:
                     modelo.train()
                     X, Y = BX[:nb], BY[:nb]
@@ -158,6 +157,28 @@ def rodar(candles, inicio, horizonte=10, congelar_em=None, usar_memoria=True,
         mem.posicionado = pos[t]
         sinais[t] = 1 if pos[t] == 1 else -1
         diario.append({"data": candles[t].date, "p": p, "posicao": pos[t],
-                       "congelado": int(congelado), "epocas": epocas_feitas})
+                       "acertou": None, "congelado": int(congelado),
+                       "epocas": epocas_feitas})
 
-    return sinais, diario
+    # marca, para cada previsao, se ela acertou a direcao do periodo seguinte.
+    # E acerto genuinamente preditivo: no dia t o modelo nao tinha esse rotulo.
+    for d in diario:
+        pass
+    por_data = {d["data"]: d for d in diario}
+    for t in range(inicio, fim):
+        if t + 1 + horizonte < n:
+            r = candles[t + 1 + horizonte].open / candles[t + 1].open - 1
+            d = por_data.get(candles[t].date)
+            if d is not None:
+                d["acertou"] = int((d["p"] > 0.5) == (r > 0))
+
+    # acerto DENTRO da amostra: o modelo final aplicado ao que ele ja treinou
+    dentro = None
+    if nb >= lote:
+        modelo.eval()
+        with torch.no_grad():
+            pr = torch.sigmoid(modelo(BX[:nb]))
+        dentro = float(((pr > 0.5).float() == BY[:nb]).float().mean())
+
+    return sinais, {"diario": diario, "acerto_dentro": dentro,
+                    "epocas": epocas_feitas, "amostras": nb}
