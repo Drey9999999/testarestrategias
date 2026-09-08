@@ -47,3 +47,46 @@ novo cruzamento.
 - `run_ema9.py` — roda o teste e imprime a tabela de resultados.
 - `tests/test_engine.py` — verifica EMA, custos, execução no candle seguinte, drawdown.
 - `results/` — resumo em JSON, lista de trades e curva de capital em CSV.
+
+---
+
+# Parte 2 — IA de visão, cérebro plástico e treino pesado
+
+## O que foi testado, em ordem
+
+1. **EMA 9** (histórico completo e 2025/26).
+2. **IA de visão**: Qwen2-VL-2B local lendo 1.230 fotos de gráfico de candles.
+3. **Cérebro plástico**: cabeça que nunca para de treinar, com features de
+   memória do próprio desempenho, e o congelado como controle.
+4. **Livro de análise técnica** definindo 46 indicadores (o que medir, não o
+   que concluir).
+5. **Treino pesado**: 376 épocas completas sobre todos os anos de gráfico por
+   rodada, horizonte de alvo, dropout, weight decay.
+
+## Disciplina de validação
+
+- **Três janelas**: treino 2018-2022, validação 2023-2024, teste 2025/26
+  tocado uma única vez, depois da configuração escolhida.
+- **Causalidade provada por destruição do futuro**: embaralhados os candles a
+  partir de uma data, nenhuma decisão anterior muda e as posteriores mudam
+  (`tests/test_causalidade.py`, `tests/test_causalidade_deep.py`).
+- **Teste nulo por deslocamento circular**, que preserva giro e suavidade do
+  sinal — o teste por embaralhamento é permissivo demais (`validate_ai.py`).
+- **Fração do tempo comprado** medida sempre, para flagrar degeneração em
+  buy and hold disfarçado.
+
+## Conclusão
+
+Nenhuma variante produziu vantagem. A causa foi isolada: a vantagem bruta é de
+~0,1% por operação contra 0,3% de custo. Forçar poucas operações com
+permanência mínima elevou o lucro por operação, mas só porque o modelo passou
+a ficar comprado 92-95% do tempo — virou buy and hold, não ficou melhor.
+
+## Como rodar
+
+```bash
+python3 run_experimento.py --fase=selecao          # treino/validação
+python3 run_experimento.py --fase=teste            # teste, uma vez
+python3 run_experimento.py --fase=selecao --h=20 --b=0.05 --hold=20,40
+python3 tests/test_causalidade_deep.py             # prova de causalidade
+```
