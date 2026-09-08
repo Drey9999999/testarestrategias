@@ -14,11 +14,10 @@ despertar, executar o proximo item, commitar, e reagendar.
 - [x] 7. Controle da preferencia estatica: o FIXO VENCE o adaptativo
 - [x] 8. Repetido na validacao 2023-24: mesmo resultado
 - [x] 9. Sensibilidade ao top_n: estatico vence em 7 de 8 configuracoes
-- [ ] 11. Refazer excluindo OKB: o ganho da carteira top-3 em 2025/26 vem
-       quase todo dele (+135,6%), e e o token da propria corretora cujos
-       dados uso. Sem ele, sobra o que?
-- [ ] 12. Rebalanceamento: variar de 10 dias para 20, 40, 60 — se adaptar
-       menos e melhor, adaptar ainda menos deve ser melhor ainda
+- [x] 11. Sem OKB: o ordenamento estatico > adaptativo SE MANTEM nas 8
+       configuracoes; o ganho absoluto some (ambos passam a perder feio)
+- [x] 12. Rebalanceamento 10/20/40/60: NAO ha tendencia. Minha previsao de
+       que adaptar menos melhoraria progressivamente estava ERRADA
 - [ ] 10. Relatorio consolidado
 
 ## Vies conhecido a declarar no relatorio
@@ -68,3 +67,32 @@ RESSALVA QUE INVALIDA O NUMERO DE MANCHETE: a carteira top-3 em 2025/26 rendeu
 propria OKX, de onde vem todo o dado deste projeto. Com top_n=20 o resultado
 volta a -71%, alinhado ao universo. O achado que se sustenta e o ORDENAMENTO
 (estatico > adaptativo), nao o retorno absoluto.
+
+### Ciclo 3 — o achado sobrevive, mas minha explicacao para ele nao
+
+Item 11 (sem OKB, 53 ativos): o ordenamento se mantem em todas as 8
+configuracoes. Mas o retorno absoluto desaparece, como eu ja suspeitava —
+em 2025/26 o estatico cai de R$ 7.664 para R$ 3.888 e passa a perder 61%.
+O adaptativo perde 79%. Continua sendo "menos ruim", nao lucro.
+
+| janela | rebal | adaptativo | menor volatilidade |
+|---|---|---|---|
+| validacao 23-24 | 10 | R$ 26.242 | R$ 67.638 |
+| teste 2025/26   | 10 | R$  2.071 | R$  3.888 |
+
+Item 12 REFUTOU minha hipotese. Eu previ que, se reescolher a cada 10 dias e
+pior que nunca reescolher, entao 40 ou 60 dias deveria ficar progressivamente
+melhor. Nao ficou:
+
+  teste 2025/26 adaptativo, por ritmo: 3.812 / 3.192 / 3.226 / 2.900
+  validacao 23-24 adaptativo, por ritmo: 26.242 / 27.073 / 20.073 / 26.673
+
+Nao ha tendencia — e ruido. Logo, a desvantagem do modelo NAO vem da
+frequencia de adaptacao. Vem da selecao em si: em qualquer ritmo, escolher
+pelo modelo e pior que escolher pela volatilidade passada. Minha explicacao
+anterior ("adaptar adiciona ruido") estava errada.
+
+O que a volatilidade passada captura e um efeito defensivo conhecido: ativos
+menos volateis caem menos nas quedas. Que ele tambem tenha vencido no bull
+market de 2023-24 (R$ 67.638 contra R$ 26.242) e mais surpreendente e merece
+o teste nulo do item 6.
