@@ -288,8 +288,9 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--rule);
     <h2>O que enfraquece até o resultado que sobreviveu</h2>
   </div>
   <div class="caveat">
-    <h3>Viés de sobrevivência, e aqui ele morde forte</h3>
-    <p>A OKX só lista pares vivos hoje. Dos 65 candidatos, 11 foram descartados por histórico curto — EOS, FTM, MKR, DASH, ZEC, WAVES, OMG, RUNE, KAVA, ANKR, REN. Ativos de baixa volatilidade são justamente os mais propensos a sobreviver, então parte do efeito medido — possivelmente boa parte — pode ser apenas isso. Não há como corrigir com esta fonte.</p>
+    <h3>Viés de sobrevivência: medido até onde deu, e não é o que eu supunha</h3>
+    <p>Dos 65 candidatos, <b>9 morreram</b>: EOS, FTM, MKR, WAVES, OMG, RUNE, KAVA, ANKR e REN não existem mais na corretora, e a API responde “instrumento não existe” — a série de preços some junto com o par. Não há como incluí-los no teste. O endpoint de instrumentos também devolve apenas pares vivos (1.416 de 1.416), então não existe fonte para reconstruir o universo histórico.</p>
+    <p>Eu vinha afirmando que esse viés inflava o resultado. <b>Para este teste específico, provavelmente é o contrário.</b> Uma carteira sorteada de 5 ativos num universo de 63 com 9 mortos teria 55% de chance de conter pelo menos um par que foi a zero; a regra de menor volatilidade, que escolhe os grandes e estáveis, quase nunca pegaria um. Incluir os mortos rebaixaria o sorteio — o controle — mais do que a regra, e o p-valor tenderia a ficar <i>menor</i>, não maior. Isso é raciocínio, não medição: depende de nenhum dos 9 ter aparecido como baixa volatilidade em algum período, e isso não dá para verificar sem os dados deles.</p>
     <p>A regra que sobreviveu ainda perdeu 61% na janela de teste. “Menos ruim que o sorteio” não é lucro. E o efeito é conhecido há cinquenta anos: o projeto reencontrou algo documentado, não achou algo novo.</p>
   </div>
 </section>

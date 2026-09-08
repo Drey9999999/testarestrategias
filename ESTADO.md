@@ -209,5 +209,51 @@ talvez nao exista publicamente. Fora isso, o que resta sao variacoes de coisas
 ja refutadas, e continuar gerando variacoes de hipoteses mortas seria produzir
 volume, nao conhecimento.
 
-- [ ] 14. Vies de sobrevivencia: procurar fonte de listagens historicas
-- [ ] 18. Se o item 14 nao tiver fonte, encerrar os ciclos e consolidar
+- [x] 14. Vies de sobrevivencia: NAO ha fonte. 9 dos 65 candidatos morreram e
+      seus dados sumiram junto. Direcao do vies reavaliada (ver Ciclo 7)
+- [x] 18. Ciclos encerrados
+
+### Ciclo 7 — fechamento
+
+Item 14. Nao existe fonte para reconstruir o universo historico:
+
+  - o endpoint de instrumentos devolve so pares vivos (1.416 de 1.416, nenhum
+    suspenso ou expirado)
+  - pares delistados respondem "instrumento nao existe" no history-candles:
+    a serie de precos some junto com o par. Testados e confirmados mortos:
+    FTT, SRM, HT, CEL, MIR, ANC
+  - dos 11 candidatos que eu havia descartado, 9 estao MORTOS (EOS, FTM, MKR,
+    WAVES, OMG, RUNE, KAVA, ANKR, REN) e 2 apenas tem historico curto
+    (DASH, ZEC)
+
+Logo: 9 de 65 candidatos (13,8%) desapareceram no periodo, e o universo de 54
+e composto integralmente de sobreviventes. Nao da para medir o efeito.
+
+CORRECAO IMPORTANTE. Eu vinha afirmando, em varios ciclos, que esse vies
+inflava o resultado da regra de volatilidade. Para ESTE teste especifico
+provavelmente e o contrario:
+
+  carteira sorteada de 5 num universo de 63 com 9 mortos:
+    55,0% de chance de conter ao menos um par que foi a zero
+  a regra de menor volatilidade escolhe os grandes e estaveis, e quase nunca
+  pegaria um deles
+
+Incluir os mortos rebaixaria o CONTROLE mais que a regra, e o p-valor tenderia
+a ficar menor, nao maior. Isso e raciocinio, nao medicao — depende de nenhum
+dos 9 ter aparecido como baixa volatilidade em algum periodo, e sem os dados
+deles nao da para verificar. O relatorio publicado foi corrigido.
+
+## Encerramento
+
+Sete ciclos autonomos. Placar: uma abordagem sobreviveu a teste nulo (selecao
+por menor volatilidade, qualificada a carteiras de 3 a 10 ativos com medicao
+de 180+ dias), uma ficou parcial (o metodo de risco do livro protege mas nao
+preve), cinco nao sobreviveram. Cinco bugs proprios encontrados e corrigidos,
+todos os quais inflariam resultado. Tres miragens interceptadas antes de virar
+afirmacao.
+
+Os ciclos param aqui. O que restaria seria variar parametros de hipoteses ja
+refutadas, o que produz volume e nao conhecimento. As direcoes ainda abertas
+exigem coisas que este ambiente nao tem: custo de execucao real de maker,
+dados que nao sejam candle (livro de ofertas, funding, fluxo on-chain), ou um
+universo que inclua os mortos.
