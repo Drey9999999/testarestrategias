@@ -12,7 +12,7 @@ import json
 import os
 import time
 
-HORIZONTES = [3, 5, 10, 20]
+HORIZONTES = [1, 2, 3, 5, 10, 20]
 
 
 def main():
